@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TechSolutions - Solutions Informatiques</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <div class="logo">
+        <a href="#accueil" class="logo-link" aria-label="Accueil TechSolutions">
+          <img src="./TechSolutions.png" alt="TechSolutions" class="logo-img" width="160" height="48" loading="lazy">
+        </a>
+      </div>
+      <ul>
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#apropos">À Propos</a></li>
+        <li><a href="#gestion-parc">Gestion</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="accueil" class="hero">
+      <div class="container">
+        <h1>🚀 Solutions Informatiques Professionnelles</h1>
+        <p>Transformez votre entreprise avec nos services informatiques de pointe</p>
+        <a class="cta" href="#contact">Contactez-nous</a>
+      </div>
+    </section>
+
+    <section id="services" class="services">
+      <div class="container">
+        <h2 class="section-title">💼 Nos Services</h2>
+        <div class="grid">
+          <div class="card"><div class="hero-ico">💻</div><h3>Développement Logiciel</h3><p class="muted">Solutions sur mesure et maintenance.</p></div>
+          <div class="card"><div class="hero-ico">🌐</div><h3>Infrastructure IT</h3><p class="muted">Réseaux, serveurs et haute disponibilité.</p></div>
+          <div class="card"><div class="hero-ico">🎨</div><h3>Design UX/UI</h3><p class="muted">Interfaces attrayantes et ergonomiques.</p></div>
+          <div class="card"><div class="hero-ico">🛠️</div><h3>Support Technique</h3><p class="muted">Assistance rapide et efficace.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="apropos">
+      <div class="container">
+        <div class="two-col">
+          <div>
+            <h2>À Propos de TechSolutions</h2>
+            <p class="muted">Entreprise dédiée à transformer les défis numériques en opportunités de croissance.</p>
+            <p class="muted">Équipe d'experts couvrant développement, infrastructure, design et support.</p>
+            <a class="cta" href="#contact">Démarrer</a>
+          </div>
+          <div class="big-ico">💡</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gestion-parc" class="services">
+      <div class="container">
+        <div class="two-col">
+          <div class="big-ico">📊</div>
+          <div>
+            <h2>Gestion de Parc Informatique</h2>
+            <p class="muted">Inventaire, maintenance, licences, monitoring et support 24/7.</p>
+            <ul class="features">
+              <li>Inventaire en temps réel</li>
+              <li>Maintenance préventive</li>
+              <li>Monitoring & rapports</li>
+              <li>Support 24/7</li>
+            </ul>
+            <a class="cta" href="#contact">En Savoir Plus</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2>📧 Nous Contacter</h2>
+        <p style="color:var(--muted);margin-bottom:18px">Laissez-nous un message et nous vous répondrons rapidement.</p>
+        <form class="form" onsubmit="event.preventDefault();alert('Merci pour votre message!');this.reset()">
+          <label for="name">Votre Nom</label>
+          <input id="name" name="name" required placeholder="Jean Dupont">
+          <label for="email">Votre Email</label>
+          <input id="email" name="email" type="email" required placeholder="jean@example.com">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Décrivez votre projet..." style="min-height:120px"></textarea>
+          <button type="submit">Envoyer le Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 TechSolutions - Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})
+    });
+  </script>
+</body>
+</html>
