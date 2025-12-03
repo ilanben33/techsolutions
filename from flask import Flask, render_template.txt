@@ -1,0 +1,79 @@
+from flask import Flask, render_template, request, redirect, session, url_for
+from datetime import timedelta
+import sqlite3
+import os
+
+app = Flask(__name__)
+app.secret_key = 'secret-key-123'
+app.permanent_session_lifetime = timedelta(hours=24)
+
+DB_PATH = 'parc.db'
+
+def init_db():
+    if not os.path.exists(DB_PATH):
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        c.execute('''CREATE TABLE parc (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            type TEXT NOT NULL,
+            status TEXT DEFAULT 'actif',
+            date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )''')
+        conn.commit()
+        conn.close()
+
+init_db()
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        user = request.form.get('user')
+        pwd = request.form.get('pass')
+        if user == 'admin' and pwd == 'AdminPass123':
+            session['is_admin'] = True
+            return redirect(url_for('parc'))
+        return redirect(url_for('login') + '?error=1')
+    error = request.args.get('error')
+    return render_template('login.html', error=error)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+@app.route('/parc', methods=['GET', 'POST'])
+def parc():
+    if not session.get('is_admin'):
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        name = request.form.get('name')
+        ptype = request.form.get('type')
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        c.execute('INSERT INTO parc (name, type) VALUES (?, ?)', (name, ptype))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('parc'))
+    
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('SELECT * FROM parc')
+    items = c.fetchall()
+    conn.close()
+    return render_template('parc.html', items=items)
+
+@app.route('/delete/<int:id>')
+def delete_parc(id):
+    if not session.get('is_admin'):
+        return redirect(url_for('login'))
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('DELETE FROM parc WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('parc'))
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)

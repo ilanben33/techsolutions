@@ -1,7 +1,10 @@
 <?php
 <?php
 session_start();
-if(!empty($_SESSION['is_admin'])) header('Location: gestion_parc.php');
+if (!empty($_SESSION['is_admin'])) {
+  header('Location: gestion_parc.php');
+  exit;
+}
 ?>
 <!doctype html>
 <html lang="fr">
