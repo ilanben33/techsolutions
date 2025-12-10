@@ -1,30 +1,121 @@
-<?php
-// Connexion rapide (XAMPP par défaut)
-$pdo = new PDO('mysql:host=127.0.0.1;dbname=techsolutions;charset=utf8mb4', 'root', '', [
-  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-]);
-
-// Requête : composants du PC #1 (alias SQL et qualification des colonnes)
-$sql = "SELECT c.name
-        FROM pc_components pc
-        JOIN components c ON c.id = pc.component_id
-        WHERE pc.pc_id = 2";
-$rows = $pdo->query($sql)->fetchAll();
-?>
 <!doctype html>
 <html lang="fr">
-<head><meta charset="utf-8"><title>Étape 02 — Composants du PC #2</title></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TechSolutions - Solutions Informatiques</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-  <h1>Composants du PC #2</h1>
-  <ul>
-    <?php if (!$rows): ?>
-      <li>Aucun composant</li>
-    <?php else: ?>
-      <?php foreach ($rows as $r): ?>
-        <li><?php echo $r['name']; // version simple, sans htmlspecialchars ?></li>
-      <?php endforeach; ?>
-    <?php endif; ?>
-  </ul>
+  <header>
+    <nav class="container">
+      <div class="logo">
+        <a href="#accueil" class="logo-link" aria-label="Accueil TechSolutions">
+          <img src="techsolution.png" alt="TechSolutions" class="logo-img" loading="lazy" width="180" height="56">
+        </a>
+      </div>
+      <ul>
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#apropos">À Propos</a></li>
+        <li><a href="admin_login.php">Espace Admin</a></li>
+        <li><a href="parc.php">Gestion du Parc</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="accueil" class="hero">
+      <div class="container">
+        <h1>🚀 Solutions Informatiques Professionnelles</h1>
+        <p>Transformez votre entreprise avec nos services informatiques de pointe</p>
+        <a class="cta" href="#contact">Contactez-nous</a>
+      </div>
+    </section>
+
+    <section id="services" class="services">
+      <div class="container">
+        <h2 class="section-title">💼 Nos Services</h2>
+        <p style="margin-bottom: 20px; color: var(--muted); font-size: 1.1rem;">Nous offrons une gamme complète de services informatiques pour répondre à tous vos besoins. Découvrez comment nous pouvons vous aider à transformer votre entreprise.</p>
+        <div class="grid">
+          <div class="card">
+            <div class="hero-ico">💻</div>
+            <h3>Développement Logiciel</h3>
+            <p class="muted">Solutions sur mesure et maintenance.</p>
+            <p>Nous développons des applications personnalisées qui répondent aux besoins spécifiques de votre entreprise, en garantissant performance et évolutivité.</p>
+          </div>
+          <div class="card">
+            <div class="hero-ico">🌐</div>
+            <h3>Infrastructure IT</h3>
+            <p class="muted">Réseaux, serveurs et haute disponibilité.</p>
+            <p>Nous concevons et mettons en œuvre des infrastructures robustes pour assurer la continuité de vos opérations et la sécurité de vos données.</p>
+          </div>
+          <div class="card">
+            <div class="hero-ico">🎨</div>
+            <h3>Design UX/UI</h3>
+            <p class="muted">Interfaces attrayantes et ergonomiques.</p>
+            <p>Nos designers créent des expériences utilisateur intuitives et esthétiques qui améliorent l'engagement et la satisfaction des utilisateurs.</p>
+          </div>
+          <div class="card">
+            <div class="hero-ico">🛠️</div>
+            <h3>Support Technique</h3>
+            <p class="muted">Assistance rapide et efficace.</p>
+            <p>Notre équipe de support est disponible 24/7 pour résoudre vos problèmes techniques et garantir le bon fonctionnement de vos systèmes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="apropos">
+      <div class="container">
+        <div class="two-col">
+          <div>
+            <h2>À Propos de TechSolutions</h2>
+            <p class="muted">Entreprise dédiée à transformer les défis numériques en opportunités de croissance.</p>
+            <p class="muted">Équipe d'experts couvrant développement, infrastructure, design et support.</p>
+            <a class="cta" href="#contact">Démarrer</a>
+          </div>
+          <div class="big-ico">💡</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2>📧 Nous Contacter pour plus d'informations</h2>
+        <p style="color:var(--muted);margin-bottom:18px">Laissez-nous un message et nous vous répondrons rapidement.</p>
+        <form class="form" onsubmit="event.preventDefault();alert('Merci pour votre message!');this.reset()">
+          <label for="name">Votre Nom</label>
+          <input id="name" name="name" required placeholder="Jean Dupont">
+          <label for="email">Votre Email</label>
+          <input id="email" name="email" type="email" required placeholder="jean@example.com">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Décrivez votre projet..." style="min-height:120px"></textarea>
+          <button type="submit">Envoyer le Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 TechSolutions - Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        e.preventDefault();
+        const t=document.querySelector(a.getAttribute('href'));
+        if(t) t.scrollIntoView({behavior:'smooth'});
+      });
+    });
+  </script>
+  <script>
+    const ADMIN_USER = 'admin';
+    const ADMIN_PASS = 'admin123';
+  </script>
 </body>
 </html>

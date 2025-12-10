@@ -1,7 +1,10 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
+
 if (!empty($_SESSION['is_admin'])) {
-  header('Location: gestion_parc.php');
+  header('Location: parc.php');
   exit;
 }
 ?>
@@ -48,6 +51,3 @@ if (!empty($_SESSION['is_admin'])) {
   </footer>
 </body>
 </html>
-<?php
-phpinfo();
-?>
